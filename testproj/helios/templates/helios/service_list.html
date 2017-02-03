@@ -1,0 +1,16 @@
+{% load staticfiles %}
+<html>
+<head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/helios.css' %}">
+</head>
+<body>
+<h1>Services</h1></h1>
+<ul>
+    {% for servicename in services %}
+  <li> {{ servicename }} </li>
+{% endfor %}
+</ul>
+</body>
+</html>
