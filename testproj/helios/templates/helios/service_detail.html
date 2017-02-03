@@ -5,6 +5,22 @@
 
 
         <h1>{{ service.servicename }}</h1>
+   <table>
+
+            <tr>
+                <th>Resource Name</th>
+                <td>{{ service.resource_name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ service.my_athens_description }}</td>
+            </tr>
+            <tr>
+                <th>Service URL</th>
+                <td><a href="{{ service.my_athens_url }}">{{ service.my_athens_url }}</td>
+            </tr>
+        </table>
+
 
     </div>
 {% endblock %}
