@@ -9,7 +9,7 @@ def service_list(request):
     return render(request, 'helios/service_list.html', {})
 
 def service_list(request):
-    services = Service.objects.filter().order_by('servicename')
+    services = Service.objects.filter(activeflag=1).order_by('servicename')
     return render(request, 'helios/service_list.html', {'services': services})
 
 def service_detail(request, pk):
