@@ -156,9 +156,12 @@ class Institution(models.Model):
     class Meta:
 
         db_table = 'institution'
+        ordering = ['instname']
 
     def __str__(self):
         return self.instname
+
+
 
 
 
@@ -199,6 +202,7 @@ class Service(models.Model):
     class Meta:
 
         db_table = 'service'
+        ordering = ['servicename']
 
     def __str__(self):
         return self.servicename
@@ -206,17 +210,24 @@ class Service(models.Model):
 
 class Licence(models.Model):
     id = models.IntegerField(primary_key=True)
-    # institution_id =  models.ForeignKey(Institution, related_name='inst', on_delete=models.CASCADE, default=None, blank=True, null=True)
-    service_id = models.ForeignKey(Service, related_name='serv', on_delete=models.CASCADE, default=None, blank=True,
-                                   null=True)
-    start_date = models.CharField(max_length=19, blank=True, null=True)
-    end_date = models.CharField(max_length=19, blank=True, null=True)
+    institution = models.ForeignKey(Institution, related_name='inst', on_delete=models.CASCADE, default=None,blank=True, null=True)
+    service = models.ForeignKey(Service, related_name='serv', on_delete=models.CASCADE, default=None, blank=True,
+                                null=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
     invoicedate = models.DateField(blank=True, null=True)
     original_instlicenceid = models.CharField(max_length=4, blank=True, null=True)
     original_instid = models.CharField(max_length=3, blank=True, null=True)
     original_serviceid = models.CharField(max_length=2, blank=True, null=True)
 
+
+
     class Meta:
         db_table = 'licence'
+        ordering = ['-start_date']
+
+
+    def __str__(self):
+        return str(self.service) + ' - ' + str(self.institution)
 
 
