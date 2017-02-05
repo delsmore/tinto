@@ -161,20 +161,21 @@ class Institution(models.Model):
         return self.instname
 
 
-class Licence(models.Model):
-    id = models.IntegerField(primary_key=True)
-    institution_id = models.IntegerField(blank=True, null=True)
-    service_id = models.IntegerField(blank=True, null=True)
-    start_date = models.CharField(max_length=19, blank=True, null=True)
-    end_date = models.CharField(max_length=19, blank=True, null=True)
-    invoicedate = models.CharField(max_length=19, blank=True, null=True)
-    original_instlicenceid = models.CharField(max_length=4, blank=True, null=True)
-    original_instid = models.CharField(max_length=3, blank=True, null=True)
-    original_serviceid = models.CharField(max_length=2, blank=True, null=True)
 
-    class Meta:
 
-        db_table = 'licence'
+
+class People(models.Model):
+    uun = models.CharField(max_length=8, default=None, blank=True, null=True)
+    name = models.CharField(max_length=100)
+    # slug = AutoSlugField(populate_from='name', null=True)
+    email = models.CharField(max_length=100, default=None, blank=True, null=True)
+    telephone = models.CharField(max_length=50, default=None, blank=True, null=True)
+    department = models.CharField(max_length=100, default=None, blank=True, null=True)
+
+    # image = models.FileField(upload_to=only_filename, default=None, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Service(models.Model):
@@ -192,6 +193,8 @@ class Service(models.Model):
     my_athens_title = models.CharField(max_length=46, blank=True, null=True)
     my_athens_url = models.CharField(max_length=40, blank=True, null=True)
     omit_from_call_list = models.CharField(max_length=5, blank=True, null=True)
+    service_owner = models.ForeignKey(People, related_name='so', on_delete=models.CASCADE, default=None, blank=True,
+                                      null=True)
 
     class Meta:
 
@@ -199,3 +202,21 @@ class Service(models.Model):
 
     def __str__(self):
         return self.servicename
+
+
+class Licence(models.Model):
+    id = models.IntegerField(primary_key=True)
+    # institution_id =  models.ForeignKey(Institution, related_name='inst', on_delete=models.CASCADE, default=None, blank=True, null=True)
+    service_id = models.ForeignKey(Service, related_name='serv', on_delete=models.CASCADE, default=None, blank=True,
+                                   null=True)
+    start_date = models.CharField(max_length=19, blank=True, null=True)
+    end_date = models.CharField(max_length=19, blank=True, null=True)
+    invoicedate = models.DateField(blank=True, null=True)
+    original_instlicenceid = models.CharField(max_length=4, blank=True, null=True)
+    original_instid = models.CharField(max_length=3, blank=True, null=True)
+    original_serviceid = models.CharField(max_length=2, blank=True, null=True)
+
+    class Meta:
+        db_table = 'licence'
+
+
