@@ -8,7 +8,7 @@
    <table class="table">
 
             <tr>
-                <th>Town/Citye</th>
+                <th>Town/City</th>
                 <td>{{ institution.instcity }}</td>
             </tr>
             <tr>
@@ -21,6 +21,8 @@
             </tr>
         </table>
 
-
+ {% for licence in licences %}
+        {{ licence.start_date }}yy
+         {% endfor %}
     </div>
 {% endblock %}

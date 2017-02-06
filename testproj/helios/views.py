@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Service
 from .models import Institution
+from .models import Licence
 from rest_framework.renderers import JSONRenderer
 from django.http import HttpResponse
 from helios.serializers import ServiceSerializer
@@ -14,7 +15,8 @@ def service_list(request):
 
 def service_detail(request, pk):
     service = get_object_or_404(Service, pk=pk)
-    return render(request, 'helios/service_detail.html', {'service': service})
+    licences = Licence.objects.filter(institution_id=pk)
+    return render(request, 'helios/service_detail.html', {'service': service, 'licences': licences})
 
 def institution_list(request):
     institutions = Institution.objects.filter().order_by('instname')
