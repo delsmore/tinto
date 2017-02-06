@@ -1,0 +1,10 @@
+{% extends 'helios/base.html' %}
+
+{% block content %}
+<h1>Institutions</h1>
+<ul>
+     {% for institution in institutions %}
+  <li> <a href="{% url 'institution_detail' pk=institution.pk %}">{{ institution.instname }}</a> </li>
+{% endfor %}
+</ul>
+{% endblock %}

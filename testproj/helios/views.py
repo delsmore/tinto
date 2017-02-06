@@ -1,12 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Service
+from .models import Institution
 from rest_framework.renderers import JSONRenderer
 from django.http import HttpResponse
 from helios.serializers import ServiceSerializer
 
 # Create your views here.
-def service_list(request):
-    return render(request, 'helios/service_list.html', {})
+
 
 def service_list(request):
     services = Service.objects.filter(activeflag=1).order_by('servicename')
@@ -15,6 +15,17 @@ def service_list(request):
 def service_detail(request, pk):
     service = get_object_or_404(Service, pk=pk)
     return render(request, 'helios/service_detail.html', {'service': service})
+
+def institution_list(request):
+    institutions = Institution.objects.filter().order_by('instname')
+    return render(request, 'helios/institution_list.html', {'institutions': institutions})
+
+def institution_detail(request, pk):
+    institution = get_object_or_404(Institution, pk=pk)
+    return render(request, 'helios/institution_detail.html', {'institution': institution})
+
+
+
 
 class JSONResponse(HttpResponse):
     """
@@ -48,3 +59,5 @@ def api_service_detail(request, pk):
     if request.method == 'GET':
         serializer = ServiceSerializer(service)
         return JSONResponse(serializer.data)
+
+
