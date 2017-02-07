@@ -15,8 +15,7 @@ def service_list(request):
 
 def service_detail(request, pk):
     service = get_object_or_404(Service, pk=pk)
-    licences = Licence.objects.filter(institution_id=pk)
-    return render(request, 'helios/service_detail.html', {'service': service, 'licences': licences})
+    return render(request, 'helios/service_detail.html', {'service': service})
 
 def institution_list(request):
     institutions = Institution.objects.filter().order_by('instname')
@@ -24,7 +23,8 @@ def institution_list(request):
 
 def institution_detail(request, pk):
     institution = get_object_or_404(Institution, pk=pk)
-    return render(request, 'helios/institution_detail.html', {'institution': institution})
+    licences = Licence.objects.filter(institution_id=pk)
+    return render(request, 'helios/institution_detail.html', {'institution': institution, 'licences': licences})
 
 
 
